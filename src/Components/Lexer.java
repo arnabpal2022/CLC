@@ -25,9 +25,9 @@ public class Lexer {
                     i++;
                 }
                 String word = input.substring(start, i);
-                if (word.equals("print")) {
+                if (word.equals("write")) {
                     Tokens.add(new Token(TokenType.T_PRINT));
-                } else if (word.equals("let")) {
+                } else if (word.equals("assume")) {
                     Tokens.add(new Token(TokenType.T_LET));
                 } else {
                     Tokens.add(new Token(TokenType.T_IDENT, word));

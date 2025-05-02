@@ -1,4 +1,5 @@
 import Components.*;
+import REPL.Repl;
 import Variables.ASTNode;
 import Variables.Token;
 import Types.TokenType;
@@ -8,6 +9,11 @@ import java.util.List;
 
 public class Main {
 
+    public static void main(String[] args){
+        Repl.start();
+    }
+
+    /*
     public static void main(String[] args) {
         if (args.length != 1) {
             System.err.println("Error: Argument Limit Exceeded");
@@ -28,12 +34,9 @@ public class Main {
 
             List<ASTNode> root = new ImprovedParser(tokens).parse();
 
-            for(ASTNode e : root){
-                System.out.println("------------------------------------");
-                ASTNode.printTree(e, 0);
-            }
-
             ASTInterpreter.interpretProgram(root);
+
+            Repl.start();
 
         } catch (FileNotFoundException e) {
             System.err.printf("Error: Unable to open %s: %s\n", fileName, e.getMessage());
@@ -44,6 +47,5 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-
-    }
+    }*/
 }
