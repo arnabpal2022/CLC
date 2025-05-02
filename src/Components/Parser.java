@@ -1,9 +1,9 @@
 package Components;
 
 import Variables.ASTNode;
-import Variables.ASTNodeType;
+import Types.ASTNodeType;
 import Variables.Token;
-import Variables.TokenType;
+import Types.TokenType;
 
 import java.util.List;
 

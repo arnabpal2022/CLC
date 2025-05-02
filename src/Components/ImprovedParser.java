@@ -1,11 +1,13 @@
 package Components;
 
 import Variables.ASTNode;
-import Variables.ASTNodeType;
+import Types.ASTNodeType;
 import Variables.Token;
-import Variables.TokenType;
+import Types.TokenType;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 public class ImprovedParser {
     private final List<Token> tokens;
@@ -36,12 +38,31 @@ public class ImprovedParser {
         };
     }
 
-    public ASTNode parse() {
-        if (currentToken.token == TokenType.T_PRINT) {
-            return printStatement();
+    public List<ASTNode> parse() {
+
+        List<ASTNode> statements = new ArrayList<>();
+
+        while (position < tokens.size() && currentToken.token != TokenType.T_EOF) {
+            if (currentToken.token == TokenType.T_PRINT) {
+                statements.add(printStatement());
+            } else if (currentToken.token == TokenType.T_LET) {
+                statements.add(letStatement());
+            } else {
+                statements.add(assignment());
+            }
+        }
+
+        return statements;
+    }
+
+    private ASTNode assignment() {
+        if (currentToken.token == TokenType.T_LET) {
+            return letStatement();
         }
         return expression();
     }
+
+
 
     private ASTNode printStatement() {
         advance(); // Skip 'print'
@@ -61,6 +82,27 @@ public class ImprovedParser {
         advance(); // Skip ')'
 
         return new ASTNode(ASTNodeType.A_PRINT, expr, 0);
+    }
+
+    private ASTNode letStatement() {
+        advance(); // Skip 'let'
+
+        // Expect identifier
+        if (currentToken.token != TokenType.T_IDENT) {
+            throw new RuntimeException("Expected variable name after 'let'");
+        }
+        String varName = currentToken.varName;
+        advance();
+
+        // Expect '='
+        if (currentToken.token != TokenType.T_EQUALS) {
+            throw new RuntimeException("Expected '=' after variable name");
+        }
+        advance();
+
+        ASTNode expr = expression();
+
+        return new ASTNode(ASTNodeType.A_LET, new ASTNode(ASTNodeType.A_IDENT, varName), expr, 0);
     }
 
     private ASTNode expression() {
@@ -95,7 +137,18 @@ public class ImprovedParser {
             ASTNode node = expression();
             advance(); // Skip ')'
             return node;
+        } else if (currentToken.token == TokenType.T_IDENT){
+            return identifier();
         }
         throw new RuntimeException("Unexpected token: " + currentToken);
+    }
+
+    private ASTNode identifier() {
+        if (currentToken.token == TokenType.T_IDENT) {
+            ASTNode node = new ASTNode(ASTNodeType.A_IDENT, currentToken.varName);
+            advance();
+            return node;
+        }
+        throw new RuntimeException("Expected identifier");
     }
 }

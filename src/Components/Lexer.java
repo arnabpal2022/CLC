@@ -1,7 +1,7 @@
 package Components;
 
 import Variables.Token;
-import Variables.TokenType;
+import Types.TokenType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +27,19 @@ public class Lexer {
                 String word = input.substring(start, i);
                 if (word.equals("print")) {
                     Tokens.add(new Token(TokenType.T_PRINT));
+                } else if (word.equals("let")) {
+                    Tokens.add(new Token(TokenType.T_LET));
                 } else {
-                    throw new RuntimeException("Unknown keyword: " + word);
+                    Tokens.add(new Token(TokenType.T_IDENT, word));
                 }
                 continue;
             }
 
             switch (ch) {
+                case '=':
+                    Tokens.add(new Token(TokenType.T_EQUALS));
+                    i++;
+                    break;
                 case '(':
                     Tokens.add(new Token(TokenType.T_LPARENT));
                     i++;

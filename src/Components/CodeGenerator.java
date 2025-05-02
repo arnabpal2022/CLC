@@ -1,9 +1,8 @@
 package Components;
 
 import Variables.ASTNode;
-import Variables.ASTNodeType;
+import Types.ASTNodeType;
 
-import java.io.Console;
 import java.io.PrintWriter;
 import java.util.Arrays;
 
