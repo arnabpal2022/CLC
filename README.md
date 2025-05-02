@@ -25,30 +25,42 @@ Example:
 ```bash
 >>> 5
 5
+
 >>> 9+5
 14
+
 >>> 74*(41+36)
 5698
+
 ```
 - Print Statements (Currently only For Integers)
 ```
 >>> write (8/7)
 Result: 1
+
 >>> write (4+7*(74-70)/(5-3))
 Result: 18
+
 ```
 - Variables and Identifiers
 ```
 >>> assume x=86
+
 >>> assume y=74
+
 >>> x+y
 160
+
 >>> x-y
 12
+
 >>> write(x*y+5)
 Result: 6369
+
 >>> assume arnab=54
+
 >>> arnab - 40
+
 14
 ```
 
